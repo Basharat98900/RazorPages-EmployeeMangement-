@@ -1,0 +1,46 @@
+﻿@page "/Employees/view/{id}"
+@model RazorPages.Pages.Employees.DetailsModel
+@{
+}
+
+<div class="row justify-content-center m-3">
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        if (Model.check)
+        {
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                @Model.Message
+            </div>
+        }
+
+    }
+    @*@await Component.InvokeAsync("HeadCount",Model.employee!.Department)*@
+    <vc:head-count dept="@Model.employee!.Department"></vc:head-count>
+   <div class="col-6">
+        <div class="card m-3">
+            <div class="card-header">
+                <h1>@Model.employee?.Name</h1>
+            </div>
+            <div class="card-body text-center">
+                @{
+                    string photoPath = "~/images/" + (string.IsNullOrEmpty(Model.employee?.PhotoPath) ? "noimage.jpg" : Model.employee.PhotoPath);
+                }
+                <img class="card-img-top img-thumbnail" src="@photoPath" asp-append-version=true />
+                <h4>EmployeeID: @Model.employee?.Id</h4>
+                <h4>Email: @Model.employee?.Email</h4>
+                <h4>Department: @Model.employee?.Department</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-primary" asp-page="/Employees/Index">Back</a>
+                <a asp-page="/Employees/Edit" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+   </div>
+</div>

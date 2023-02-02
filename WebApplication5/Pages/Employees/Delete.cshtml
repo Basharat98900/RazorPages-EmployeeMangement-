@@ -1,0 +1,16 @@
+﻿@page "{id}"
+@model RazorPages.Pages.Employees.DeleteModel
+@{
+    ViewData["ShowButtons"] = false;
+}
+<h1>Delete Confirmation</h1>
+<div class="alert alert-danger ">
+    <div class="col-6 mx-auto">
+        <partial name="_DisplayEmployeePartial" model="@Model.Employee" view-data="ViewData" />
+        <h5>Are you sure you want to delete employee - @Model.Employee!.Name</h5>
+        <form method="post">
+            <button type="submit" class="btn btn-danger">Yes</button>
+            <a class="btn btn-primary" asp-page="/Employees/Index">No</a>
+        </form>
+    </div>
+</div>

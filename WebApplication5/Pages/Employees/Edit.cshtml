@@ -1,0 +1,70 @@
+﻿@page "{id?}"
+@using RazorPages.Models;
+@model RazorPages.Pages.Employees.EditModel
+
+@{
+    var photoPath = "~/images/" + (string.IsNullOrEmpty(Model.emp.PhotoPath) ? "noimage.jpg" : Model.emp.PhotoPath);
+    var pageHeader = Model.emp.Id > 0 ? "Edit" : "Create";
+}
+<form method="post" asp-page-handler="UpdateNotificationPreferences">
+    <h1>
+    Notification Preferences
+</h1>
+<div class="mb-3 form-check">
+    <input asp-for="Notify" type="checkbox" class="form-check-input" />
+    <label class="form-check-label" asp-for="Notify">Recieve email notification when details change</label>
+</div>
+
+    <button style="width:auto;" type="submit" class="btn btn-primary">  Update Notification Preferences</button>
+</form>
+<hr />
+<h4>@pageHeader</h4>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post"  class="mt-3" enctype="multipart/form-data" asp-page-handler="OnPost">
+        <input hidden asp-for="emp.Id" />
+        <input hidden asp-for="emp.PhotoPath" />
+    <div class="row mb-3">
+        <label asp-for="emp.Name" class="col-2 col-form-label"></label>
+        <div class="col-10">
+            <input  asp-for="emp.Name" placeholder="Name" class="form-control" />
+            <span asp-validation-for="emp.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+            <label asp-for="emp.Email" class="col-2 col-form-label"></label>
+            <div class="col-10">
+                <input asp-for="emp.Email" placeholder="Email" class="form-control" />
+            <span asp-validation-for="emp.Email" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="emp.Department" class="col-2 col-form-label"></label>
+        <div class="col-10">
+            <select asp-for="emp.Department" class="form-select" asp-items="Html.GetEnumSelectList<Dept>()">
+                <option value="">Please Select</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Photo" class="col-2 form-label"></label>
+       <div class="col-10">
+            <input asp-for="Photo" value="@Model.emp.PhotoPath" class="form-control" type="file" />
+       </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-4 offset-4">
+            <img class="img-thumbnai" src="@photoPath" asp-append-version=true />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-10">
+            <button type="submit"  class="btn btn-primary">Update</button>
+            <a asp-page="/Employees/Index" class="btn btn-primary">Cancel</a>
+        </div>
+       
+    </div>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}
